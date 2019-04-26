@@ -27,16 +27,16 @@ class JdbcAlbumRepository : AlbumRepository {
     }
 
     override suspend fun findByTitle(title: String): List<Album> = execute {
-        Albums.select {
-            Albums.title eq title
-        }.mapNotNull { row ->
-            Album(
-                seq = row[Albums.seq],
-                title = row[Albums.title],
-                genre = row[Albums.genre],
-                issueAt = row[Albums.issueAt].toJavaLocalDate()
-            )
-        }
+        Albums.select { Albums.title eq title }
+            .orderBy(Albums.seq, SortOrder.DESC)
+            .mapNotNull { row ->
+                Album(
+                    seq = row[Albums.seq],
+                    title = row[Albums.title],
+                    genre = row[Albums.genre],
+                    issueAt = row[Albums.issueAt].toJavaLocalDate()
+                )
+            }
     }
 
     override suspend fun findByGenreLike(genre: String, offset: Int, length: Int): List<Album> = execute {
@@ -54,16 +54,16 @@ class JdbcAlbumRepository : AlbumRepository {
     }
 
     override suspend fun findAll(artist: Artist): List<Album> = execute {
-        Albums.select {
-            Albums.artistSeq eq artist.seq
-        }.mapNotNull { row ->
-            Album(
-                seq = row[Albums.seq],
-                title = row[Albums.title],
-                genre = row[Albums.genre],
-                issueAt = row[Albums.issueAt].toJavaLocalDate()
-            )
-        }
+        Albums.select { Albums.artistSeq eq artist.seq }
+            .orderBy(Albums.seq, SortOrder.DESC)
+            .mapNotNull { row ->
+                Album(
+                    seq = row[Albums.seq],
+                    title = row[Albums.title],
+                    genre = row[Albums.genre],
+                    issueAt = row[Albums.issueAt].toJavaLocalDate()
+                )
+            }
     }
 
 }

@@ -53,9 +53,9 @@ class AlbumServiceTest {
     fun `아티스트의 앨범 조회가 가능하다`() = runBlocking {
         val albums = albumService.findAll(Artist(3, "BLACKPINK", 4, LocalDate.of(2016, 8, 8)))
         assertThat(albums.size, `is`(3))
-        assertThat(albums[0].title, `is`("SQUARE UP"))
+        assertThat(albums[2].title, `is`("SQUARE UP"))
         assertThat(albums[1].title, `is`("마지막처럼"))
-        assertThat(albums[2].title, `is`("SQUARE TWO"))
+        assertThat(albums[0].title, `is`("SQUARE TWO"))
         val json = objectMapper.writeValueAsString(albums)
         log.info("Albums: $json")
     }
@@ -64,9 +64,9 @@ class AlbumServiceTest {
     fun `장르로 앨범을 검색할 수 있다`() = runBlocking {
         val albums = albumService.searchByGenre("랩")
         assertThat(albums.size, `is`(3))
-        assertThat(albums[0].title, `is`("LOVE YOURSELF 結 Answer"))
+        assertThat(albums[2].title, `is`("LOVE YOURSELF 結 Answer"))
         assertThat(albums[1].title, `is`("WINGS"))
-        assertThat(albums[2].title, `is`("DARK&WILD"))
+        assertThat(albums[0].title, `is`("DARK&WILD"))
         val json = objectMapper.writeValueAsString(albums)
         log.info("랩 장르로 검색 결과: $json")
 
