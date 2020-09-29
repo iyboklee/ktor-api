@@ -14,38 +14,39 @@ import org.jetbrains.exposed.sql.Database as Exposed
 
 object Database {
 
-    private val log = LoggerFactory.getLogger(javaClass)
+  private val log = LoggerFactory.getLogger(javaClass)
 
-    private lateinit var pool: HikariDataSource
+  private lateinit var pool: HikariDataSource
 
-    private lateinit var exposed: Exposed
+  private lateinit var exposed: Exposed
 
-    private lateinit var dispatcher: CoroutineDispatcher
+  private lateinit var dispatcher: CoroutineDispatcher
 
-    fun init(name: String, dispatcherPoolSize: Int = 5, poolConfigSupplier: () -> HikariConfig) {
-        log.info("Database of $name starting...")
+  fun init(name: String, dispatcherPoolSize: Int = 5, poolConfigSupplier: () -> HikariConfig) {
+    log.info("Database of $name starting...")
 
-        val poolConfig = poolConfigSupplier()
+    val poolConfig = poolConfigSupplier()
 
-        log.info(ReflectionToStringBuilder.toString(poolConfig, ToStringStyle.MULTI_LINE_STYLE))
-        pool = HikariDataSource(poolConfig)
-        exposed = Exposed.connect(pool)
+    log.info(ReflectionToStringBuilder.toString(poolConfig, ToStringStyle.MULTI_LINE_STYLE))
+    pool = HikariDataSource(poolConfig)
+    exposed = Exposed.connect(pool)
 
-        dispatcher = newFixedThreadPoolContext(dispatcherPoolSize, "$name-dispatcher-pool")
+    dispatcher = newFixedThreadPoolContext(dispatcherPoolSize, "$name-dispatcher-pool")
 
-        log.info("Database of $name started.")
-    }
+    log.info("Database of $name started.")
+  }
 
-    fun close() {
-        pool.close()
-    }
+  fun close() {
+    pool.close()
+  }
 
-    suspend fun <T> execute(block: () -> T): T = execute(Connection.TRANSACTION_READ_COMMITTED, 3, block)
+  suspend fun <T> execute(block: () -> T): T = execute(Connection.TRANSACTION_READ_COMMITTED, 3, block)
 
-    suspend fun <T> execute(transactionIsolation: Int, repetitionAttempts: Int, block: () -> T): T = withContext(dispatcher) {
-        transaction(transactionIsolation, repetitionAttempts) {
-            block()
-        }
+  suspend fun <T> execute(transactionIsolation: Int, repetitionAttempts: Int, block: () -> T): T =
+    withContext(dispatcher) {
+      transaction(transactionIsolation, repetitionAttempts) {
+        block()
+      }
     }
 
 }

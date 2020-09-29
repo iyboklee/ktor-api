@@ -13,17 +13,17 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 val Jackson = jacksonObjectMapper().apply {
-    enable(SerializationFeature.INDENT_OUTPUT)
-    disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+  enable(SerializationFeature.INDENT_OUTPUT)
+  disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
 
-    setSerializationInclusion(JsonInclude.Include.NON_NULL)
-    setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE)
-    setVisibility(PropertyAccessor.IS_GETTER, JsonAutoDetect.Visibility.NONE)
-    setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
+  setSerializationInclusion(JsonInclude.Include.NON_NULL)
+  setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE)
+  setVisibility(PropertyAccessor.IS_GETTER, JsonAutoDetect.Visibility.NONE)
+  setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
 
-    registerModule(JavaTimeModule().apply {
-        addDeserializer(LocalDateTime::class.java, LocalDateTimeDeserializer(DateTimeFormatter.ISO_DATE_TIME))
-    })
+  registerModule(JavaTimeModule().apply {
+      addDeserializer(LocalDateTime::class.java, LocalDateTimeDeserializer(DateTimeFormatter.ISO_DATE_TIME))
+  })
 }
 
 fun database(
@@ -35,15 +35,15 @@ fun database(
     minimumIdle: Int = 1,
     maximumPoolSize: Int = 3
 ) {
-    Database.init(name) {
-        HikariConfig().apply {
-            poolName = name
-            this.driverClassName = driverClassName
-            this.jdbcUrl = jdbcUrl
-            this.username = username
-            this.password = password
-            this.minimumIdle = minimumIdle
-            this.maximumPoolSize = maximumPoolSize
-        }
+  Database.init(name) {
+    HikariConfig().apply {
+      poolName = name
+      this.driverClassName = driverClassName
+      this.jdbcUrl = jdbcUrl
+      this.username = username
+      this.password = password
+      this.minimumIdle = minimumIdle
+      this.maximumPoolSize = maximumPoolSize
     }
+  }
 }
