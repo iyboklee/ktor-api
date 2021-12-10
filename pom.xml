@@ -15,7 +15,7 @@
     <kotlin.code.style>official</kotlin.code.style>
     <kotlin.version>1.4.10</kotlin.version>
     <slf4j.version>1.7.30</slf4j.version>
-    <log4j.version>2.13.3</log4j.version>
+    <log4j.version>2.15.0</log4j.version>
     <commons.lang.version>3.11</commons.lang.version>
     <ktor.version>1.4.1</ktor.version>
     <jackson.version>2.11.2</jackson.version>
