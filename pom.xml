@@ -20,7 +20,7 @@
     <ktor.version>1.4.1</ktor.version>
     <jackson.version>2.11.2</jackson.version>
     <kgraphql.version>0.3.0</kgraphql.version>
-    <h2.version>1.4.199</h2.version>
+    <h2.version>2.0.206</h2.version>
     <hikariCP.version>3.4.5</hikariCP.version>
     <exposed.version>0.17.7</exposed.version>
     <jupiter.version>5.7.0</jupiter.version>
