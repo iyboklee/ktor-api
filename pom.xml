@@ -18,7 +18,7 @@
     <log4j.version>2.13.3</log4j.version>
     <commons.lang.version>3.11</commons.lang.version>
     <ktor.version>1.4.1</ktor.version>
-    <jackson.version>2.11.2</jackson.version>
+    <jackson.version>2.13.4.1</jackson.version>
     <kgraphql.version>0.3.0</kgraphql.version>
     <h2.version>1.4.199</h2.version>
     <hikariCP.version>3.4.5</hikariCP.version>
